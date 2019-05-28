@@ -1,22 +1,18 @@
 <template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
+  <v-app dark>
+    <v-toolbar app color="primary">
+      <v-img v-if="$store.state.access_token" src="http://site.veusserver.com/wp-content/themes/veus/img/logo.png" max-width="100"></v-img>
       <v-spacer></v-spacer>
       <v-btn
+      v-if="$store.state.access_token"
         flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        @click="logout"
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>open_in_new</v-icon>
+        Sair
       </v-btn>
     </v-toolbar>
 
-    <v-content>
+    <v-content >
       <router-view/>
     </v-content>
   </v-app>
@@ -30,6 +26,15 @@ export default {
     return {
       //
     }
+  },
+  methods: {
+    logout(){
+      this.$store.commit('SET_ACCESS_TOKEN','')
+      localStorage.setItem('access_token','')
+      this.$router.push('/login')
+    }
   }
 }
 </script>
+<style lang="stylus">
+</style>
